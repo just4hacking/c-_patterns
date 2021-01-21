@@ -1,3 +1,6 @@
+/*
+DON'T PUT TOO MUCH INTO AN INTERFACE, SPLIT INTO SEPARATE INTERFACES
+*/
 #include <vector>
 #include <iostream>
 #include <string>

@@ -1,4 +1,7 @@
-/* THIS IS AN EXAMPLE OF BREAKING 
+/* 
+YOU SHOULD BE ALWAYS BE ABLE TO SUBSTITUE BASE TYPE ON SUBTYPE
+
+THIS IS AN EXAMPLE OF BREAKING 
 THE LISKOV SUBSTITUTION PRINCIPLE */
 
 #include <vector>
@@ -6,7 +9,6 @@ THE LISKOV SUBSTITUTION PRINCIPLE */
 #include <string>
 
 using namespace std;
-//using namespace boost;
 
 class Rectangle {
 protected:
