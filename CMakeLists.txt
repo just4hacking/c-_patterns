@@ -5,7 +5,20 @@ project (CMakeHelloWorld)
 set (CMakeHelloWorld_VERSION_MAJOR 1)
 set (CMakeHelloWorld_VERSION_MINOR 0)
 
-file(GLOB files "src/*")
+set(Boost_USE_STATIC_LIBS OFF) 
+set(Boost_USE_MULTITHREADED ON)  
+set(Boost_USE_STATIC_RUNTIME OFF) 
+find_package(Boost COMPONENTS
+  system
+) 
+
+if(NOT Boost_FOUND)
+  message(SEND_ERROR "Boost not found")
+endif()
+
+include_directories(${Boost_INCLUDE_DIRS}) 
+  
+file(GLOB files "libs/*")
 foreach(file ${files})
   #include the subdirectory containing our libs
   add_subdirectory (${file})
@@ -14,11 +27,19 @@ foreach(file ${files})
   set(libraries ${libraries} ${file})
   get_filename_component(file_name "${file}" NAME)
   set(libraries_names ${libraries_names} ${file_name})
+
 endforeach()
 
-add_executable (CMakeHelloWorld ${libraries} main.cpp)
+file(GLOB src_files "src/*")
+foreach(file ${files})
+  set(SRC_FILES ${SRC} ${src_files})
+  message(${SRC_FILES})
+endforeach()
+
+add_executable (patterns ${libraries} ${SRC_FILES})
+target_link_libraries(patterns ${Boost_LIBRARIES})
 
 # Indicate which libraries to include during the link process.
-target_link_libraries (CMakeHelloWorld ${libraries_names})
+target_link_libraries (patterns ${libraries_names})
 
-install (TARGETS CMakeHelloWorld DESTINATION bin)
+install (TARGETS patterns DESTINATION bin)

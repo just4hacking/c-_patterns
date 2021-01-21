@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "presentation": {
+    "reveal": "silent",
+    "clear": true
+  },
+  "tasks": [
+    {
+      "label": "build (debug)",
+      "dependsOn": [
+        "cmake debug",
+        "make debug"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "cmake debug",
+      "command": "/usr/local/bin/cmake",
+      "args": [
+        "DCMAKE_BUILD_TYPE=DEBUG",
+        ".."
+      ],
+      "options": {
+        "cwd": "build"
+      }
+    },
+    {
+      "label": "make debug",
+      "command": "/usr/bin/make",
+      "options": {
+        "cwd": "build"
+      }
+    }
+  ]
+}
