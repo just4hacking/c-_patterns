@@ -1,9 +1,14 @@
 {
   "version": "2.0.0",
   "presentation": {
-    "reveal": "silent",
-    "clear": true
+    //"reveal": "silent",
+    //"clear": true
   },
+  "command": "bash",
+  "type": "shell",   
+  "args": [
+    "-c"
+  ],
   "tasks": [
     {
       "label": "build (debug)",
