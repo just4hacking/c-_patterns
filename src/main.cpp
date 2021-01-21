@@ -1,12 +1,13 @@
 #include <speaker.h>
 #include <talker.h>
-#include "./journal.hpp"
+#include "./SOLID/liskov_substitution.cpp"
+#include "./SOLID/open_closed_principle.cpp"
+#include "./SOLID/interface_segregation.cpp"
+#include "./SOLID/dependency_inversion.cpp"
+#include "./SOLID/single_responsibility.cpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  Journal journal("Dear Diary");
-  journal.add_entry("I ate a bug");
-  journal.add_entry("I cried today");
-  cout<<"hello"<< endl;
+  return 0;
 }
