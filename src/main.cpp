@@ -1,20 +1,31 @@
 #include <iostream>
+#include <cmath>
 #include "./builder/index.hpp"
+#include "./factory/index.hpp"
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+//alternative to drink factory
+unique_ptr<HotDrink> make_drink(string type) {
+  unique_ptr<HotDrink> drink;
 
-  Person p = Person::create()
-    .lives()
-      .at("123 London Road")
-      .with_postcode("SW1 1GB")
-      .in("London")
-    .works()
-      .at("Pragmasoft")
-      .as_a("Consultant")
-      .earning(10e6);
-      
-  cout << p << endl;
+  if (type == "tea") {
+    drink = make_unique<Tea>();
+    drink->prepare(200);
+  } else {
+    drink = make_unique<Coffee>();
+    drink->prepare(50);
+  }
+  return drink;
+}
+
+int main(int argc, char *argv[]) {
+  DrinkFactory df;
+  auto c = df.make_drink("coffee");
+
+  DrinkWithVolumeFactory dnvf;
+  auto t = dnvf.make_drink("tea");
+
+  cout << "Success" << endl;
   return 0;
 }

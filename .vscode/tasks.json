@@ -23,7 +23,7 @@
       "label": "cmake debug",
       "command": "/usr/local/bin/cmake",
       "args": [
-        "DCMAKE_BUILD_TYPE=DEBUG",
+        "DCMAKE_BUILD_TYPE=Debug",
         ".."
       ],
       "options": {
@@ -34,7 +34,7 @@
       "label": "make debug",
       "command": "/usr/bin/make",
       "args": [
-        "VERBOSE=0"
+        //"VERBOSE=0"
       ],
       "options": {
         "cwd": "build"

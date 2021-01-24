@@ -1,4 +1,4 @@
-# Motivation
+# MOTIVATION
   - Object creating logic becomes too convoluted
   - Constructor is not descriptive
     - Name mandated by name of containing type
@@ -12,3 +12,9 @@
 # FACTORY
 A component responsible solely for the wholesale (not piecewise)
 creation of objects
+
+# SUMMARY
+  - A factory method is a static method that creates objects
+  - A factory can take care of object creation
+  - A factory can be external component or reside inside the object as an inner class
+  - Hierarchies of factories can be used to create related objects
