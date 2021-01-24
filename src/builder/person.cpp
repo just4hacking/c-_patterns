@@ -5,8 +5,6 @@ PersonBuilder Person::create() {
   return PersonBuilder{};
 }
 
-
-
 Person::Person(Person&& other) : street_address{move(other.street_address)},
   post_code{move(other.post_code)},
   city{move(other.city)},
@@ -14,7 +12,6 @@ Person::Person(Person&& other) : street_address{move(other.street_address)},
   position{move(other.position)},
   annual_income{other.annual_income}
 {}
-
 
 Person& Person::operator=(Person&& other)
 {

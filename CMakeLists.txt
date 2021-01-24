@@ -40,7 +40,6 @@ foreach(file ${src_files})
   set(SRC_FILES ${SRC_FILES} ${file})
 endforeach()
 
-message(${SRC_FILES})
 add_executable (patterns ${libraries} 
   ${SRC_FILES} src/main.cpp
 )
