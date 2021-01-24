@@ -33,6 +33,9 @@
     {
       "label": "make debug",
       "command": "/usr/bin/make",
+      "args": [
+        "VERBOSE=0"
+      ],
       "options": {
         "cwd": "build"
       }

@@ -1,13 +1,20 @@
-#include <speaker.h>
-#include <talker.h>
-#include "./SOLID/liskov_substitution.cpp"
-#include "./SOLID/open_closed_principle.cpp"
-#include "./SOLID/interface_segregation.cpp"
-#include "./SOLID/dependency_inversion.cpp"
-#include "./SOLID/single_responsibility.cpp"
+#include <iostream>
+#include "./builder/index.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
+
+  Person p = Person::create()
+    .lives()
+      .at("123 London Road")
+      .with_postcode("SW1 1GB")
+      .in("London")
+    .works()
+      .at("Pragmasoft")
+      .as_a("Consultant")
+      .earning(10e6);
+      
+  cout << p << endl;
   return 0;
 }

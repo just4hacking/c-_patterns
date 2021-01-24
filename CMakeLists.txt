@@ -34,13 +34,16 @@ foreach(file ${files})
 
 endforeach()
 
-file(GLOB src_files "src/*")
-foreach(file ${files})
-  set(SRC_FILES ${SRC} ${src_files})
-  message(${SRC_FILES})
+#GLOB RECRSE IS EVIL https://stackoverflow.com/questions/32411963/why-is-cmake-file-glob-evil
+file(GLOB_RECURSE src_files "src/*")
+foreach(file ${src_files})
+  set(SRC_FILES ${SRC_FILES} ${file})
 endforeach()
 
-add_executable (patterns ${libraries} ${SRC_FILES})
+message(${SRC_FILES})
+add_executable (patterns ${libraries} 
+  ${SRC_FILES} src/main.cpp
+)
 target_link_libraries(patterns ${Boost_LIBRARIES})
 
 # Indicate which libraries to include during the link process.

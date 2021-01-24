@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -19,7 +20,7 @@ enum class Relationship {
   sibling
 };
 
-struct Person {
+struct SolidPerson {
   string name;
 };
 
@@ -28,9 +29,9 @@ struct Person {
 //all the ,modules that depend on this one are forced to be
 //refactored
 struct BadRelationships {
-  vector<tuple<Person, Relationship, Person>> relations;
+  vector<tuple<SolidPerson, Relationship, SolidPerson>> relations;
 
-  void add_parent_and_child(const Person& parent, const Person& child) {
+  void add_parent_and_child(const SolidPerson& parent, const SolidPerson& child) {
     relations.push_back({ parent, Relationship::parent, child });
     relations.push_back({ child, Relationship::child, parent });
   }
@@ -52,20 +53,20 @@ struct BadResearch {
 //How to solve it? introduce an 
 //abstractions and move some parts into low-level module
 struct RelationshipBrowser {
-  virtual vector<Person> find_all_children_of(const string& name) = 0;
+  virtual vector<SolidPerson> find_all_children_of(const string& name) = 0;
 };
 
 //low-level
 struct Relationships : RelationshipBrowser {
-  vector<tuple<Person, Relationship, Person>> relations;
+  vector<tuple<SolidPerson, Relationship, SolidPerson>> relations;
 
-  void add_parent_and_child(const Person& parent, const Person& child) {
+  void add_parent_and_child(const SolidPerson& parent, const SolidPerson& child) {
     relations.push_back({ parent, Relationship::parent, child });
     relations.push_back({ child, Relationship::child, parent });
   }
 
-  vector<Person> find_all_children_of(const string& name) override {
-    vector<Person> result;
+  vector<SolidPerson> find_all_children_of(const string& name) override {
+    vector<SolidPerson> result;
     for (auto&& [first, rel, second] : relations) {
       if (first.name == name && rel == Relationship::parent) {
         result.push_back(second);
@@ -89,8 +90,8 @@ struct Research {
 EXAMPLE
 
 int main(int argc, char *argv[]) {
-  Person parent{"John"};
-  Person child1{"Chris"}, child2{"Matt"};
+  SolidPerson parent{"John"};
+  SolidPerson child1{"Chris"}, child2{"Matt"};
 
   Relationships relationships;
   relationships.add_parent_and_child(parent, child1);

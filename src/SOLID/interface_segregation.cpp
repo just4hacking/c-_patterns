@@ -32,7 +32,7 @@ struct BadMFP : BadIMachine {
 };
 
 //problem
-struct BadScanner : IMachine {
+struct BadScanner : BadIMachine {
   void print(Document* doc) {
     //throw exeception? It's misleading for client
   }
