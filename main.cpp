@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <memory>
 
 #include "./src/builder/index.hpp"
 #include "./src/prototype/index.hpp"
@@ -8,11 +9,11 @@
 
 using namespace std;
 
-
 int main(int argc, char *argv[]) {
-  string city = "Tokyo";
-  cout << city << " has population " <<
-    SingletonDatabase::get().get_population(city) << endl;
+  typedef Multiton<MultitonPrinter, Importance> mt;
 
+  auto main = mt::get(Importance::primary);
+  auto aux = mt::get(Importance::secondary);
+  auto aux2 = mt::get(Importance::secondary);
 }
 

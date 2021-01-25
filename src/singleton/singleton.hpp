@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <map>
 #include <fstream>
@@ -8,8 +9,14 @@
 using namespace std;
 using namespace boost;
 
+//resolves issues with testing, as we can implement 
+//a dependency inhection
+class Database {
+public:
+  virtual int get_population(const string& name) = 0;
+};
 
-class SingletonDatabase {
+class SingletonDatabase : public Database {
   SingletonDatabase() {
     cout << "Initializing database\n";
     ifstream ifs;
@@ -43,14 +50,55 @@ public:
   }
 };
 
+class DummyDatabase : public Database {
+  map<string, int> capitals;
+public:
+  DummyDatabase() {
+    capitals["alpha"] = 1;
+    capitals["beta"] = 2;
+    capitals["gamma"] = 3;
+  }
+
+  int get_population(const string& name) override {
+    return capitals[name];
+  }
+};
+
+//more flexible database
+struct ConfigurableRecordFinder {
+  Database& db;
+
+  ConfigurableRecordFinder(Database& db) : db(db) {
+
+  }
+
+  int total_population(vector<string> names) {
+    int result{0};
+    for (auto& name : names) {
+      result += db.get_population(name);
+    }
+    return result;
+  }
+};
+
+//bad finder as it's hard to test
 struct SingletonRecordFinder {
   //the problem is with testing
   int total_population(vector<string> names) {
     int result{0};
     for (auto& name : names) {
-      cout << SingletonDatabase::get().get_population(name) << endl;
       result += SingletonDatabase::get().get_population(name);
     }
     return result;
   }
 };
+
+/*
+EXAMPLE
+int main(int argc, char *argv[]) {
+  string city = "Tokyo";
+  cout << city << " has population " <<
+    SingletonDatabase::get().get_population(city) << endl;
+
+}
+*/

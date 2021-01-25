@@ -1,1 +1,3 @@
-#include "./singleton.cpp"
+#include "./singleton.hpp"
+#include "./monostate.hpp"
+#include "./multiton.hpp"
