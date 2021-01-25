@@ -13,11 +13,19 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)  
 set(Boost_USE_STATIC_RUNTIME OFF) 
 find_package(Boost COMPONENTS
+  serialization
   system
 ) 
 
 if(NOT Boost_FOUND)
   message(SEND_ERROR "Boost not found")
+endif()
+
+enable_testing()
+find_package(GTest REQUIRED)
+
+if (NOT GTEST_FOUND)
+  message(SEND_ERROR "Google tests are not found")
 endif()
 
 include_directories(${Boost_INCLUDE_DIRS}) 
@@ -41,11 +49,15 @@ foreach(file ${src_files})
 endforeach()
 
 add_executable (patterns ${libraries} 
-  ${SRC_FILES} src/main.cpp
+  ${SRC_FILES} main.cpp
 )
 target_link_libraries(patterns ${Boost_LIBRARIES})
-
-# Indicate which libraries to include during the link process.
-target_link_libraries (patterns ${libraries_names})
-
 install (TARGETS patterns DESTINATION bin)
+
+#test
+add_executable(tests test.cpp ${SRC_FILES})
+target_link_libraries(tests 
+  ${libraries} 
+  ${Boost_LIBRARIES} 
+  GTest::GTest GTest::Main)
+add_test(AllTests tests)
