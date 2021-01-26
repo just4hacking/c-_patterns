@@ -6,14 +6,18 @@
 #include "./src/prototype/index.hpp"
 #include "./src/factory/index.hpp"
 #include "./src/singleton/index.hpp"
+#include "./src/adapter/index.hpp"
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
-  typedef Multiton<MultitonPrinter, Importance> mt;
 
-  auto main = mt::get(Importance::primary);
-  auto aux = mt::get(Importance::secondary);
-  auto aux2 = mt::get(Importance::secondary);
+std::vector<std::shared_ptr<VectorObject>> vectorObjects {
+  std::make_shared<VectorRectangle>(10, 10, 100, 100),
+  std::make_shared<VectorRectangle>(30, 30, 60, 60),
+};
+
+int main(int argc, char *argv[]) {
+  //drawAdapter(vectorObjects);
+  drawCachingAdapter(vectorObjects);
 }
 
