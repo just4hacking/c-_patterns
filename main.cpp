@@ -7,17 +7,18 @@
 #include "./src/factory/index.hpp"
 #include "./src/singleton/index.hpp"
 #include "./src/adapter/index.hpp"
+#include "./src/bridge/index.hpp"
+#include "./src/composite/index.hpp"
 
 using namespace std;
 
-
-std::vector<std::shared_ptr<VectorObject>> vectorObjects {
-  std::make_shared<VectorRectangle>(10, 10, 100, 100),
-  std::make_shared<VectorRectangle>(30, 30, 60, 60),
-};
-
 int main(int argc, char *argv[]) {
-  //drawAdapter(vectorObjects);
-  drawCachingAdapter(vectorObjects);
-}
+  Group root("root");
+  Circle c1, c2;
+  root.objects.push_back(&c1);
+  Group subgroup("sub");
+  subgroup.objects.push_back(&c2);
+  root.objects.push_back(&subgroup);
 
+  root.draw();
+}
