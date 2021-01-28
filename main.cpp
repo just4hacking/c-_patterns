@@ -13,4 +13,18 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+
+  Creature orc;
+  orc.set_strength(16);
+  orc.set_agility(11);
+  orc.set_intelligence(9);
+
+  cout << "The orc has an average stat of "
+       << orc.average()
+       << " and a maximum stat of "
+       << orc.max()
+       << "\n";
+
+  return 0;
+  
 }
