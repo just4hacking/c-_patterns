@@ -9,22 +9,25 @@
 #include "./src/adapter/index.hpp"
 #include "./src/bridge/index.hpp"
 #include "./src/composite/index.hpp"
+#include "./src/decorator/index.hpp"
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+double add(double a, double b) {
+  cout << a << "+" << b << " = " << (a + b) << endl;
+  return a + b;
+}
 
-  Creature orc;
-  orc.set_strength(16);
-  orc.set_agility(11);
-  orc.set_intelligence(9);
+int main(int argc, char *argv[])
+{
+  //decorator::Logger([]() { cout << "Hello" << endl;}, "HelloFunction")();
+  auto log = decorator::make_logger2([]() {
+    cout << "Hello" << endl;
+  },
+  "HelloFunction");
+  log();
 
-  cout << "The orc has an average stat of "
-       << orc.average()
-       << " and a maximum stat of "
-       << orc.max()
-       << "\n";
-
-  return 0;
-  
+  auto logged_add = decorator::make_logger3(add, "Add");
+  auto result = logged_add(2, 3);
+  cout << "result = " << result << endl;
 }
