@@ -11,17 +11,11 @@
 #include "./src/composite/index.hpp"
 #include "./src/decorator/index.hpp"
 #include "./src/flyweight/index.hpp"
+#include "./src/proxy/index.hpp"
 
 using namespace std;
 
 
 int main(int argc, char *argv[])
 {
-  flyweight_custom::FormattedText ft{"This is a brave new world!"};
-  ft.capitalize(10, 15);
-  cout << ft << endl;
-
-  flyweight_custom::BetterFormattedText bft{"This is a brave new world!"};
-  bft.get_range(10, 15).capitalize = true;
-  cout << bft << endl;
 }
