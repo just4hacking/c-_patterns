@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
+#include <vector>
 
 #include "./src/builder/index.hpp"
 #include "./src/prototype/index.hpp"
@@ -13,21 +14,29 @@
 #include "./src/flyweight/index.hpp"
 #include "./src/proxy/index.hpp"
 #include "./src/chain_of_responsibility/index.hpp"
+#include "./src/command/index.hpp"
 
 using namespace std;
 
 
 int main(int argc, char *argv[])
 {
-  chain::Game game;
-  chain::GameCreature goblin{game, 2, 2, "Strong Goblin"};
+  command::BankAccount ba;
 
-  cout << goblin << endl;
+  vector<command::BankAccountCommand> commands {
+    command::BankAccountCommand{ba, command::BankAccountCommand::Action::deposit, 100},
+    command::BankAccountCommand{ba, command::BankAccountCommand::Action::withdraw, 200}
+  };
 
-  {
-    chain::DoubleAttackModifier2 dam{game, goblin};
-    cout << goblin << endl;
+  cout << ba << endl;
+
+  for (auto& cmd : commands) {
+    cmd.call();
   }
 
-  cout << goblin << endl;
+  for (auto it = commands.rbegin(); it != commands.rend(); ++it) {
+    it->undo();
+  }
+
+  cout << ba << endl;
 }
