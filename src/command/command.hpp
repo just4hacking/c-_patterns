@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <initializer_list>
 
 namespace command {
 
@@ -76,10 +77,61 @@ struct BankAccountCommand : public Command {
   }
 };
 
+struct CompositeBankAccountCommand : public vector<BankAccountCommand>, Command {
+  CompositeBankAccountCommand(const std::initializer_list<BankAccountCommand>& items) 
+  : vector(items) {
+
+  }
+
+  void call() override {
+    for (auto& cmd : *this) {
+      cmd.call();
+    }
+  }
+
+  void undo() override {
+    for (auto it = rbegin(); it != rend(); ++it) {
+      it->undo();
+    }
+  }
+};
+
+
+struct DependentCompositeCommand : public CompositeBankAccountCommand {
+  DependentCompositeCommand(const initializer_list<BankAccountCommand>& items)
+  : CompositeBankAccountCommand(items) {
+
+  }
+
+  void call() override {
+    bool ok = true;
+
+    for (auto& cmd : *this) {
+      if (ok) {
+        cmd.call();
+        ok = cmd.succeeded;
+      } else {
+        cmd.succeeded = false;
+      }
+    }
+  }
+  
+};
+
+struct MoneyTransferCommand : public DependentCompositeCommand {
+  MoneyTransferCommand(BankAccount& from, BankAccount& to, int amount)
+  : DependentCompositeCommand({ 
+    BankAccountCommand{from, BankAccountCommand::Action::withdraw, amount},
+    BankAccountCommand{to, BankAccountCommand::Action::deposit, amount}
+  }) {}
+};
+
+
 }
 
 /*
 EXAMPLE
+
 int main(int argc, char *argv[])
 {
   command::BankAccount ba;
@@ -100,5 +152,18 @@ int main(int argc, char *argv[])
   }
 
   cout << ba << endl;
+
+  //composite
+  command::BankAccount ba2;
+  ba2.deposit(100);
+
+  command::MoneyTransferCommand cmd{ba, ba2, 50000};
+  cmd.call();
+
+  cout << ba << endl << ba2 << endl;
+
+  cmd.undo();
+
+  cout << ba << endl << ba2 << endl;
 }
 */

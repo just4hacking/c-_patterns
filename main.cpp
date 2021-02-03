@@ -39,4 +39,17 @@ int main(int argc, char *argv[])
   }
 
   cout << ba << endl;
+
+  //composite
+  command::BankAccount ba2;
+  ba2.deposit(100);
+
+  command::MoneyTransferCommand cmd{ba, ba2, 50000};
+  cmd.call();
+
+  cout << ba << endl << ba2 << endl;
+
+  cmd.undo();
+
+  cout << ba << endl << ba2 << endl;
 }

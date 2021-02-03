@@ -17,5 +17,11 @@ necessary for the action to be taken
 - CQS = having seperate means of sending commands and queries
 - In GoF context, both commands and queries are represented with the Command design pattern
 
+# SUMMARY
+- Encapsulate all details of an operation in a seperate object
+- Define instruction for applying the command (either i command itself, or elsewhere)
+- Optionally define instructions for undoing the command
+- Can create composite commands (a.k.a macros)
+
 
 
